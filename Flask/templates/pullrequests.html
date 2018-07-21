@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container">
+    <br>
+    <h3>Pull Requests</h3>
+    <br>
+    <div class="card-group">
+    {% for pullrequest in pullrequests %}
+    <div class="col-lg-4 col-md-8 mb-4">
+        <div class="card card-cascade wider reverse">
+            <div class="card-body card-body-cascade text-center">
+                <h4 class="card-title">
+                    <i class="fa fa-code"> {{ pullrequest[0] }}</i>
+                </h4>
+                <h5 class="card-text">
+                        <i class="fa fa-code-fork"> {{ pullrequest[3] }}</i>
+                </h5>
+                <i class="fa fa-user">  {{ pullrequest[1] }}</i>
+            </div>
+            {% if "OPEN" in pullrequest[2] %}
+            <div class="card-footer narrower bg-primary text-white text-center">
+                <a>{{ pullrequest[2] }}</a>  
+                {% for num in range(pullrequest[4]) %}
+                <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle-thin fa-stack-2x"></i>
+                    <i class="fa fa-check fa-stack-1x"></i>
+                </span>
+                {% endfor %}
+            </div>
+            {% elif "MERGED" in pullrequest[2] %}
+            <div class="card-footer narrower bg-success text-white text-center">
+                <a>{{ pullrequest[2] }}</a>  
+            </div>
+            {% elif "DECLINED" in pullrequest[2] %}
+            <div class="card-footer narrower bg-danger text-white text-center">
+                <a>{{ pullrequest[2] }}</a>  
+            </div>
+            {% else %}
+            <div class="card-footer">
+                <a>{{ pullrequest[2] }}</a>
+                <a>{{ pullrequest[4] }}</a>  
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container">
+    <br>
+    <h3>Build Pipelines</h3>
+    <br>
+    <div class="card-group">
+    {% for pipeline in pipelines %}
+    {% if "INPROGRESS" in pipeline[2] %}
+    <div class="col-lg-4 col-md-8 mb-4">
+        <div class="card card-cascade wider reverse">
+            <div class="card-body card-body-cascade text-center">
+                <h4 class="card-title">
+                    <i class="fa fa-code">  {{ pipeline[0] }} </i>
+                </h4>
+                <i class="fa fa-user">  {{ pipeline[1] }}</i>
+            </div>
+            <div class="card-footer narrower bg-primary text-white text-center">
+                <a>{{ pipeline[2] }}</a>
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+        </div>
+    </div>
+    {% elif "SUCCESSFUL" in pipeline[2] %}
+    <div class="col-lg-4 col-md-8 mb-4">
+        <div class="card card-cascade wider reverse">
+            <div class="card-body card-body-cascade text-center">
+                <h4 class="card-title">
+                    <i class="fa fa-code">  {{ pipeline[0] }} </i>
+                </h4>
+                <i class="fa fa-user">  {{ pipeline[1] }}</i>
+            </div>
+            <div class="card-footer bg-success text-white text-center">
+            <a>{{ pipeline[2] }}</a>  
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-lg-4 col-md-8 mb-4">
+            <div class="card card-cascade wider reverse">
+                <div class="card-body card-body-cascade text-center">
+                    <h4 class="card-title">
+                        <i class="fa fa-code">  {{ pipeline[0] }} </i>
+                    </h4>
+                    <i class="fa fa-user">  {{ pipeline[1] }}</i>
+                </div>    
+                    {% if "STOPPED" in pipeline[2] %}
+                    <div class="card-footer bg-warning text-white text-center">
+                        <a>{{ pipeline[2] }}</a>  
+                    </div>
+                    {% elif "FAILED" in pipeline[2] %}
+                    <div class="card-footer bg-danger text-white text-center">
+                        <a>{{ pipeline[2] }}</a>  
+                    </div>
+                    {% else %}
+                    <div class="card-footer text-center">
+                        <a>{{ pipeline[2] }}</a>  
+                    </div>
+                    {% endif %}
+            </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
